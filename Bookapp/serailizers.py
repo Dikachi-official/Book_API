@@ -11,4 +11,5 @@ class BookSerializer(serializers.ModelSerializer):
             'author_email'
         )
 
+        # SPECIFIC MODEL
         model = Book
