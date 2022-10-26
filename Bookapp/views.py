@@ -21,7 +21,7 @@ def book_list(request):
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
 
-    # POST REQUEST FOR DEATIL VIEW
+    # POST REQUEST FOR DETAIL VIEW
     elif request.method == 'POST':
         serializer = BookSerializer(data=request.data)  #get data from frontend and serialize it
 
