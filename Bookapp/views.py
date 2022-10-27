@@ -1,3 +1,4 @@
+from asyncio import mixins
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from . models import Book
@@ -8,8 +9,49 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import mixins
+from rest_framework import generics
 
 # Create your views here.
+
+
+# GENERIC VIEWS AND MIXINS.........................
+
+#class for generics and mixins
+class GenericAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin,
+                    mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
+    serializer_class = BookSerializer
+    queryset = Book.objects.all()
+
+    lookup_field = 'id'
+
+    def get(self, request, id = None):
+
+        if id:
+            return self.retrieve(request)
+
+        else:
+            return self.list(request)
+
+
+    def post(self,request):
+        return self.create(request)
+
+    def put(self, request, id = None):
+        return self.update(request, id)
+
+    def delete(self, request, id):
+        return self.destroy(request, id)                    
+
+# END OF GENERIC VIEWS AND MIXINS.........................
+
+
+
+
+
+
+
+
 
 
 
@@ -67,8 +109,7 @@ class BookDetail(APIView):
         return Response(status = status.HTTP_204_NO_CONTENT)      
 
 
-
-
+# END OF CLASS BASED API VIEWS.........................
 
 
 
@@ -133,7 +174,7 @@ class BookDetail(APIView):
         #return Response(status=status.HTTP_204_NO_CONTENT)      
 
 
-
+# END OF API VIEW DECORATOR IN OUR FUNCTION BASED VIEWS.................
 
 
 
@@ -166,7 +207,6 @@ class BookDetail(APIView):
         #return JsonResponse(serializer._errors, status=400)
 
 
-
 # DETAIL URL VIEW
 #@ csrf_exempt      
 #def book_detail(request, pk):
@@ -185,3 +225,4 @@ class BookDetail(APIView):
         #data = JSONParser().parse(request)
         #serializer = BookSerializer(book, data=data)
 
+# END OF FUNCTION BASED VIEWS.....................
