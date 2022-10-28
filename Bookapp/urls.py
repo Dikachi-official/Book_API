@@ -15,12 +15,14 @@ urlpatterns = [
     #path('book/', views.book_list),   # API VIEW DECORATOR FUNCTION
     #path('book/<int:pk>/', views.book_detail),  # API DETAIL-VIEW DECORATOR FUNCTION
 
-    path('book/', BookAPIView.as_view()),   # class based api view
-    path('book/<int:id>/', BookDetail.as_view()),  # class based detail view
+    #path('book/', BookAPIView.as_view()),   # class based api view
+    #path('book/<int:id>/', BookDetail.as_view()),  # class based detail view
 
     path('generic/book/<int:id>/', GenericAPIView.as_view()),  # GENERICS AND MIXIN URL PATH
 
-    path('bookviewset/',include(router.urls)), # URL FOR ROUTING IN VIEWSET(http://localhost:8000/api/bookviewset/book/1/)
-    path('bookviewset/<int:pk>/', include(router.urls)) #http://localhost:8000/api/bookviewset/book/1/
+    #path('bookviewset/',include(router.urls)), # URL FOR ROUTING IN VIEWSET(http://localhost:8000/api/bookviewset/book/1/)
+    #path('bookviewset/<int:pk>/', include(router.urls)), #http://localhost:8000/api/bookviewset/book/1/
 
+    path('bookviewset/',include(router.urls)), # URL FOR ROUTING IN GENERIC VIEWSET
+    path('bookviewset/<int:pk>/', include(router.urls)), #http://localhost:8000/api/bookviewset/book/1/
 ]

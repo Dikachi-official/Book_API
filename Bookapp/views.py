@@ -20,41 +20,61 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
+#GENERIC VIEWSET AND MIXIN(INHERITING CLASS BASED VIEWSET & ITS URL)
+class BookViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin,
+                    mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
+    serializer_class = BookSerializer
+    queryset = Book.objects.all()
+
+# END OF GENERIC VIEWSET AND MIXIN 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # CLASS BASED VIEWSET
-class BookViewSet(viewsets.ViewSet):
-    def list(self, request):          #MAKE A LIST(GET REQUEST)
-        books = Book.objects.all()
-        serializer = BookSerializer(books, many = True)
-        return Response(serializer.data)
+#class BookViewSet(viewsets.ViewSet):
+    #def list(self, request):          #MAKE A LIST(GET REQUEST)
+        #books = Book.objects.all()
+        #serializer = BookSerializer(books, many = True)
+        #return Response(serializer.data)
 
-    def create(self, request):
-        serializer = BookSerializer(data = request.data)     #FUNCTION TO CREATE(POST REQUEST)
-        if serializer.is_valid:
-            return Response(serializer.data, status =status.HTTP_201_CREATED)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)    
+    #def create(self, request):
+        #serializer = BookSerializer(data = request.data)     #FUNCTION TO CREATE(POST REQUEST)
+        #if serializer.is_valid:
+            #return Response(serializer.data, status =status.HTTP_201_CREATED)
+        #return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)    
 
-    def retrieve(self, request, pk = None):
-        queryset = Book.objects.all()
-        books = get_object_or_404(queryset, pk=pk)
-        serializer = BookSerializer(books)
-        return Response(serializer.data)
+    #def retrieve(self, request, pk = None):
+        #queryset = Book.objects.all()
+        #books = get_object_or_404(queryset, pk=pk)
+        #serializer = BookSerializer(books)
+        #return Response(serializer.data)
 
-    def update(self, request, pk = None):
-        book = Book.objects.get(pk = pk)   # GET A PARTICULAR BOOK BY PK
-        serializer = BookSerializer(book, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
+    #def update(self, request, pk = None):
+        #book = Book.objects.get(pk = pk)   # GET A PARTICULAR BOOK BY PK
+        #serializer = BookSerializer(book, data=request.data)
+        #if serializer.is_valid():
+            #serializer.save()
+            #return Response(serializer.data)
+        #return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
 
 
-    def destroy(self, request, pk = None):
-        queryset = Book.objects.all()
-        books = get_object_or_404(queryset, pk=pk)
-        books.delete()
-        return Response(status = status.HTTP_204_NO_CONTENT)
+    #def destroy(self, request, pk = None):
+        #queryset = Book.objects.all()
+        #books = get_object_or_404(queryset, pk=pk)
+        #books.delete()
+        #return Response(status = status.HTTP_204_NO_CONTENT)
 
 
                
@@ -73,7 +93,7 @@ class BookViewSet(viewsets.ViewSet):
 
 
 
-# GENERIC VIEWS AND MIXINS.........................
+# GENERIC API VIEWS AND MIXINS.........................
 
 #class for generics and mixins
 class GenericAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin,
