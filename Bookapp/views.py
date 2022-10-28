@@ -27,7 +27,8 @@ class GenericAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Crea
     queryset = Book.objects.all()
 
     lookup_field = 'id'
-    authentication_classes = [SessionAuthentication,BasicAuthentication]  #SELECTED AUTHENTICATION
+    #authentication_classes = [SessionAuthentication, BasicAuthentication]  #SELECTED AUTHENTICATION
+    authentication_classes = [TokenAuthentication]      #SELECTED AUTHENTICATION
     permission_classes = [IsAuthenticated]
 
     def get(self, request, id = None):
