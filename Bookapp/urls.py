@@ -12,6 +12,6 @@ urlpatterns = [
     path('book/', BookAPIView.as_view()),   # class based api view
     path('book/<int:id>/', BookDetail.as_view()),  # class based detail view
 
-    path('generic/book/<int:id>/', GenericAPIView.as_view())  # GENERICS AND MIXIN URL PATH
+    path('generic/book/<int:id>/', GenericAPIView.as_view()),  # GENERICS AND MIXIN URL PATH
 
 ]
