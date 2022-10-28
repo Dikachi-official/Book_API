@@ -1,4 +1,5 @@
 from asyncio import mixins
+from tracemalloc import get_object_traceback
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from . models import Book
@@ -13,9 +14,63 @@ from rest_framework import mixins
 from rest_framework import generics
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
+
+
+
+# CLASS BASED VIEWSET
+class BookViewSet(viewsets.ViewSet):
+    def list(self, request):          #MAKE A LIST(GET REQUEST)
+        books = Book.objects.all()
+        serializer = BookSerializer(books, many = True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = BookSerializer(data = request.data)     #FUNCTION TO CREATE(POST REQUEST)
+        if serializer.is_valid:
+            return Response(serializer.data, status =status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)    
+
+    def retrieve(self, request, pk = None):
+        queryset = Book.objects.all()
+        books = get_object_or_404(queryset, pk=pk)
+        serializer = BookSerializer(books)
+        return Response(serializer.data)
+
+    def update(self, request, pk = None):
+        book = Book.objects.get(pk = pk)   # GET A PARTICULAR BOOK BY PK
+        serializer = BookSerializer(book, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
+
+
+    def destroy(self, request, pk = None):
+        queryset = Book.objects.all()
+        books = get_object_or_404(queryset, pk=pk)
+        books.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+
+
+               
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # GENERIC VIEWS AND MIXINS.........................
