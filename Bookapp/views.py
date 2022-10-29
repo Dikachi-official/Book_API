@@ -20,11 +20,33 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
-#GENERIC VIEWSET AND MIXIN(INHERITING CLASS BASED VIEWSET & ITS URL)
-class BookViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin,
-                    mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
+#MODEL VIEWSET INHERITING FROM GENERIC API-VIEW
+#MODEL VIEWSET(TO CREATE,GET, PUT, AND DELETE )
+class BookViewset(viewsets.ModelViewSet):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
+
+# END OF MODEL VIEWSET
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#GENERIC VIEWSET AND MIXIN(INHERITING CLASS BASED VIEWSET & ITS URL)
+#class BookViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin,
+                    #mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
+    #serializer_class = BookSerializer
+    #queryset = Book.objects.all()
 
 # END OF GENERIC VIEWSET AND MIXIN 
 

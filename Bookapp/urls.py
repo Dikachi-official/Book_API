@@ -1,11 +1,11 @@
 from django.urls import path, include
 from . import views
-from . views import BookAPIView, BookDetail, GenericAPIView, BookViewSet
+from . views import BookAPIView, BookDetail, GenericAPIView, BookViewset
 from rest_framework.routers import DefaultRouter    # FOR ROUTING IN VIEWSET
 
 
 router = DefaultRouter()     #SET DEFAULT-ROUTER TO VARIABLE( DJANGO DOCS)
-router.register('book', BookViewSet, basename = 'book')  # REGISTER VIEWS AND QS FOR VIEWSET ROUTING
+router.register('book', BookViewset, basename = 'book')  # REGISTER VIEWS AND QS FOR VIEWSET ROUTING
 
 
 urlpatterns = [
